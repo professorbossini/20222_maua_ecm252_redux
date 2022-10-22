@@ -1,3 +1,5 @@
+const redux = require ('redux')
+const { createStore, combineReducers } = redux
 //essa função é criadora de um tipo de ação
 const criarContrato = (nome, taxa) => {
   return {
@@ -49,3 +51,18 @@ const contratos = (listaDeContratoAtual = [], acao) => {
     return listaDeContratoAtual.filter(c => c.nome !== acao.payload.nome)
   return listaDeContratoAtual
 }
+
+const todosOsReducers = combineReducers({
+  historicoDePedidosDeCashback,
+  caixa,
+  contratos
+})
+
+
+const store = createStore(todosOsReducers)
+store.dispatch(criarContrato("José", 50))
+store.dispatch(criarContrato("Maria", 50))
+store.dispatch(solicitarCashback("Maria", 10))
+store.dispatch(solicitarCashback('José', 20))
+store.dispatch(cancelarContrato('Maria'))
+console.log(store.getState())
